@@ -17,7 +17,7 @@ class Config:
     GITHUB_REF = os.getenv("GITHUB_REF", "")
     REVIEW_LANGUAGE = os.getenv("REVIEW_LANGUAGE", "vietnamese").lower()
     # RULES_DIR = os.getenv("INPUT_RULES_PATH", "ai-review-rules")
-    RULES_DIR = os.getenv("INPUT_RULES_PATH", "pubstar-ios")
+    RULES_DIR = os.getenv("RULES_PATH")
 
     # OpenRouter model configuration
     # Model is controlled by project maintainers, users cannot override
@@ -88,9 +88,13 @@ class Config:
         # .parent lần 1 ra: scripts/reviewer/
         # .parent lần 2 ra: scripts/
         scripts_dir = Path(__file__).resolve().parent.parent
+
+        print(f"Debug: script_dir resolved to: {scripts_dir}")
+        print(f"Debug: RULES_DIR from env: '{cls.RULES_DIR}'")
         
         # Trỏ tới thư mục pubstar-ios nằm cùng cấp với reviewer
-        return scripts_dir / "rules" / "pubstar-ios"
+        # return scripts_dir / "rules" / "pubstar-ios"
+        return scripts_dir / "rules" / cls.RULES_DIR
 
     @classmethod
     def validate(cls) -> list[str]:
@@ -117,13 +121,13 @@ class Config:
             errors.append(f"Invalid REVIEW_LANGUAGE: {cls.REVIEW_LANGUAGE}. Must be 'vietnamese' or 'english'")
 
         rules_path = cls.get_rules_path()
-        print(f"Debug: Checking rules path at: {rules_path}")
-
         if not rules_path.exists() or not rules_path.is_dir():
             errors.append(f"Rules directory not found at: {cls.RULES_DIR}")
         else:
             # Tìm tất cả file kết thúc bằng .md ở ngay trong thư mục này
             md_files = list(rules_path.glob("*.md"))
+
+            print(f"Debug: Checking md files: {len(md_files)} found in {rules_path}")
             if not md_files:
                 errors.append(f"Rules directory '{cls.RULES_DIR}' contains no markdown (.md) files.")
 

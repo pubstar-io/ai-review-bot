@@ -20,6 +20,9 @@ inputs:
     description: 'Language for code review comments: "vietnamese" or "english"'
     required: false
     default: 'vietnamese'
+  rule-path:
+    description: 'Đường dẫn đến thư mục chứa các file .md rules review'
+    required: true
 
 runs:
   using: 'composite'
@@ -43,4 +46,5 @@ runs:
         GITHUB_REPOSITORY: ${{ github.repository }}
         GITHUB_REF: ${{ github.ref }}
         REVIEW_LANGUAGE: ${{ inputs.review-language }}
+        RULES_PATH: ${{ inputs.rule-path }}
       run: python ${{ github.action_path }}/scripts/ai_review.py
