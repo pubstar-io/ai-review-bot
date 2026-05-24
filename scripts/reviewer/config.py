@@ -90,7 +90,7 @@ class Config:
         scripts_dir = Path(__file__).resolve().parent.parent
         
         # Trỏ tới thư mục pubstar-ios nằm cùng cấp với reviewer
-        return scripts_dir / "pubstar-ios"
+        return scripts_dir / "rules" / "pubstar-ios"
 
     @classmethod
     def validate(cls) -> list[str]:
@@ -117,6 +117,7 @@ class Config:
             errors.append(f"Invalid REVIEW_LANGUAGE: {cls.REVIEW_LANGUAGE}. Must be 'vietnamese' or 'english'")
 
         rules_path = cls.get_rules_path()
+        print(f"Debug: Checking rules path at: {rules_path}")
 
         if not rules_path.exists() or not rules_path.is_dir():
             errors.append(f"Rules directory not found at: {cls.RULES_DIR}")
