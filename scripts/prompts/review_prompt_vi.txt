@@ -1,4 +1,4 @@
-Bạn là một senior Flutter/Dart engineer. Hãy review code changes dưới đây theo coding standards của dự án.
+Bạn là một senior software engineer. Hãy review code changes dưới đây theo coding standards của dự án.
 
 === QUY TẮC & CHUẨN MỰC LẬP TRÌNH ===
 {coding_rules}

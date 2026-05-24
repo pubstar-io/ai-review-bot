@@ -1,4 +1,4 @@
-# Flutter AI Code Reviewer (OpenRouter)
+# AI Code Reviewer (OpenRouter)
 
 > **🎉 NEW: v3.0 - OpenRouter Integration!** Now supports multiple AI providers through OpenRouter API. Easily switch between models like Grok, Claude, GPT-4, Gemini, and more by just changing a config parameter. No more vendor lock-in!
 
@@ -8,7 +8,7 @@
 
 **Chi tiết hơn**:
 - Đây là một GitHub Action (tự động chạy khi có PR)
-- Sử dụng AI (như ChatGPT, Claude, Gemini...) để phân tích code Flutter/Dart
+- Sử dụng AI (như ChatGPT, Claude, Gemini...) để phân tích code bạn viết trong PR
 - Kiểm tra theo các quy tắc như Clean Architecture, GetX patterns, chuẩn code...
 - Đưa ra **1 comment tổng hợp** trên PR với các góp ý cụ thể
 
@@ -199,7 +199,7 @@ Sửa file `.github/workflows/ai-review.yml`:
 
 ### Các quy tắc AI kiểm tra
 
-AI được huấn luyện để kiểm tra code Flutter/Dart theo các tiêu chí sau:
+AI được huấn luyện để kiểm tra code bạn viết theo các tiêu chí sau:
 
 #### 1. **Kiến trúc Clean Architecture**
 
@@ -315,7 +315,7 @@ AI được huấn luyện để kiểm tra code Flutter/Dart theo các tiêu ch
 ### Cấu trúc thư mục (Dễ hiểu)
 
 ```
-flutter-ai-review-bot/
+ai-review-bot/
 │
 ├── action.yml                           # ← File định nghĩa GitHub Action
 │
@@ -519,11 +519,11 @@ Thư mục `scripts/prompts/` có 2 file:
 1. Mở file `scripts/prompts/review_prompt_vi.txt`
 2. Tìm đoạn:
    ```
-   Bạn là một senior Flutter/Dart engineer...
+   Bạn là một senior software engineer...
    ```
 3. Sửa thành:
    ```
-   Bạn là một SUPER STRICT senior Flutter/Dart engineer.
+   Bạn là một SUPER STRICT senior software engineer.
    Hãy tìm MỌI lỗi, dù là nhỏ nhất.
    Đánh giá rất khắt khe...
    ```

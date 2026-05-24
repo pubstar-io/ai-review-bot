@@ -182,7 +182,7 @@ class PromptBuilder:
             Minimal coding rules
         """
         return textwrap.dedent("""
-        ## Key Flutter Review Rules:
+        ## Key Review Rules:
         - Clean Architecture: Domain must NOT import Data/Presentation layers
         - GetX: Use init: only at root widget, Get.find() in children
         - Assets: Use Assets.icons.iconBack (NOT hardcoded paths)
@@ -196,7 +196,7 @@ class PromptBuilder:
         Returns:
             Fallback Vietnamese template
         """
-        return """Bạn là một senior Flutter/Dart engineer. Hãy review code changes dưới đây theo coding standards của dự án.
+        return """Bạn là một senior software engineer. Hãy review code changes dưới đây theo coding standards của dự án.
 
 === QUY TẮC & CHUẨN MỰC LẬP TRÌNH ===
 {coding_rules}

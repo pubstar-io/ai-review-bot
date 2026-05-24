@@ -27,7 +27,7 @@ jobs:
 
       # Step 2: Run the AI Code Reviewer
       - name: Run OpenRouter AI Code Reviewer
-        uses: TQC-Solution/flutter-ai-review-bot@main
+        uses: pubstar-io/ai-review-bot@main
         with:
           # OpenRouter API key (set this in repository secrets)
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
