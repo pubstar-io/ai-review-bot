@@ -1,5 +1,5 @@
-name: 'Flutter AI Code Reviewer (OpenRouter)'
-description: 'Automated Flutter/Dart code review using OpenRouter AI with Clean Architecture standards'
+name: 'AI Code Reviewer (OpenRouter)'
+description: 'Automated code review using OpenRouter AI with Clean Architecture standards'
 author: 'vincetran'
 
 branding:
