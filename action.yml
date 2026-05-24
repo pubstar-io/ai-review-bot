@@ -23,6 +23,10 @@ inputs:
   rule-path:
     description: 'Đường dẫn đến thư mục chứa các file .md rules review'
     required: true
+  openrouter-model:
+    description: 'OpenRouter model to use for code review (controlled by maintainers)'
+    required: false
+    default: 'google/gemini-3.1-flash-lite'
 
 runs:
   using: 'composite'
@@ -47,4 +51,5 @@ runs:
         GITHUB_REF: ${{ github.ref }}
         REVIEW_LANGUAGE: ${{ inputs.review-language }}
         RULES_PATH: ${{ inputs.rule-path }}
+        OPENROUTER_MODEL: ${{ inputs.openrouter-model }}
       run: python ${{ github.action_path }}/scripts/ai_review.py
