@@ -365,7 +365,7 @@ ai-review-bot/
 │   │       ├── CLEAN_ARCHITECTURE_RULES.md # → Quy tắc Clean Architecture
 │   │       └── CODING_RULES.md             # → Quy tắc code chung của ngôn ngũ
 │   │
-│   └── prompts/                        # ← Template prompt gửi AI (có thể edit)
+│   └── system-prompts/                 # ← System prompts chung trong hệ thống
 │       ├── review_prompt_vi.txt        # → Prompt tiếng Việt
 │       ├── review_prompt_en.txt        # → Prompt tiếng Anh
 │       └── README.md                   # → Hướng dẫn edit prompts
@@ -382,7 +382,7 @@ ai-review-bot/
 | `scripts/ai_review.py`                  | Code Python chính        | ❌ Không cần (trừ khi fix bug)                 |
 | `scripts/reviewer/*.py`                 | Các module Python        | ❌ Không cần (trừ khi fix bug)                 |
 | `scripts/rules/[folder code rule]/*.md` | **Quy tắc review**       | ✅ **Có - Edit để thay đổi cách AI review**    |
-| `scripts/prompts/*.txt`                 | **Template prompt AI**   | ✅ **Có - Edit để thay đổi tone/style của AI** |
+| `scripts/system-prompts/*.txt`          | **Template prompt AI**   | ✅ **Có - Edit để thay đổi tone/style của AI** |
 
 ### Chi tiết các module Python
 
@@ -507,9 +507,9 @@ Hiện có 3 file quy tắc:
 
 **Cách 1: Sửa file quy tắc có sẵn**
 
-Ví dụ muốn thay đổi quy tắc GetX:
+Ví dụ muốn thay đổi quy tắc:
 
-1. Mở file `scripts/rule/GETX_CONTROLLER_RULES.md`
+1. Mở file `scripts/rules/[folder code rules]/*.md`
 2. Sửa nội dung theo ý muốn (bằng tiếng Việt hoặc tiếng Anh đều được)
 3. Lưu file
 4. Lần review sau AI sẽ dùng quy tắc mới
@@ -518,7 +518,7 @@ Ví dụ muốn thay đổi quy tắc GetX:
 
 Ví dụ muốn thêm quy tắc về testing:
 
-1. Tạo file mới: `scripts/rule/TESTING_RULES.md`
+1. Tạo file mới: `scripts/rules/TESTING_RULES.md`
 2. Viết quy tắc:
 
    ```markdown
@@ -531,7 +531,7 @@ Ví dụ muốn thêm quy tắc về testing:
 
 3. Lưu file → Tự động được load vào prompt gửi AI
 
-> **Lưu ý**: Tất cả file `.md` trong thư mục `rule/` sẽ được AI đọc và áp dụng
+> **Lưu ý**: Tất cả file `.md` trong thư mục `rules/` sẽ được AI đọc và áp dụng
 
 ---
 
@@ -539,7 +539,7 @@ Ví dụ muốn thêm quy tắc về testing:
 
 ### Prompt được lưu ở đâu?
 
-Thư mục `scripts/prompts/` có 2 file:
+Thư mục `scripts/system-prompts/` có 2 file:
 
 - `review_prompt_vi.txt` - Prompt tiếng Việt
 - `review_prompt_en.txt` - Prompt tiếng Anh
@@ -548,7 +548,7 @@ Thư mục `scripts/prompts/` có 2 file:
 
 **Ví dụ: Muốn AI review strict hơn**
 
-1. Mở file `scripts/prompts/review_prompt_vi.txt`
+1. Mở file `scripts/system-prompts/review_prompt_vi.txt`
 2. Tìm đoạn:
    ```
    Bạn là một senior software engineer...
@@ -565,7 +565,7 @@ Thư mục `scripts/prompts/` có 2 file:
 
 Trong prompt, bạn có thể dùng các biến này (sẽ được thay thế tự động):
 
-- `{coding_rules}` → Nội dung từ các file trong `scripts/rule/`
+- `{coding_rules}` → Nội dung từ các file trong `scripts/rules/`
 - `{code_diff}` → Code diff của PR
 
 **Ví dụ prompt:**
@@ -580,7 +580,7 @@ Code cần review:
 {code_diff}
 ```
 
-> **Chi tiết**: Xem hướng dẫn đầy đủ tại [scripts/prompts/README.md](scripts/prompts/README.md)
+> **Chi tiết**: Xem hướng dẫn đầy đủ tại [scripts/system-prompts/README.md](scripts/prompts/README.md)
 
 ---
 
