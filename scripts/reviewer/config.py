@@ -95,8 +95,8 @@ class Config:
         if not cls.GITHUB_REPOSITORY:
             errors.append("GITHUB_REPOSITORY is not set")
 
-        if not cls.RULES_DIR:
-            errors.append("RULES_DIR is not set")
+        if not cls.STACK:
+            errors.append("STACK is not set")
 
         if cls.REVIEW_LANGUAGE not in ['vietnamese', 'english']:
             errors.append(f"Invalid REVIEW_LANGUAGE: {cls.REVIEW_LANGUAGE}. Must be 'vietnamese' or 'english'")
