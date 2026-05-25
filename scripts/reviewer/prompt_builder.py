@@ -154,49 +154,49 @@ class PromptBuilder:
             return self._get_fallback_stacks()
         
 
-    def _load_coding_rules(self) -> str:
-        """Load coding rules from all rule files in the rule/ directory.
+    # def _load_coding_rules(self) -> str:
+    #     """Load coding rules from all rule files in the rule/ directory.
 
-        Returns:
-            Combined coding rules text from all rule files or fallback minimal rules
-        """
-        rules_dir = Config.get_rules_path()
+    #     Returns:
+    #         Combined coding rules text from all rule files or fallback minimal rules
+    #     """
+    #     rules_dir = Config.get_rules_path()
 
-        try:
-            # Get all markdown files in the rule directory
-            rule_files = sorted([
-                f for f in os.listdir(rules_dir)
-                if f.endswith('.md')
-            ])
+    #     try:
+    #         # Get all markdown files in the rule directory
+    #         rule_files = sorted([
+    #             f for f in os.listdir(rules_dir)
+    #             if f.endswith('.md')
+    #         ])
 
-            if not rule_files:
-                print(f"⚠️ Warning: No rule files found in {rules_dir}")
-                return self._get_fallback_rules()
+    #         if not rule_files:
+    #             print(f"⚠️ Warning: No rule files found in {rules_dir}")
+    #             return self._get_fallback_rules()
 
-            # Load and combine all rule files
-            all_rules = []
-            for rule_file in rule_files:
-                rule_path = os.path.join(rules_dir, rule_file)
-                try:
-                    with open(rule_path, "r", encoding="utf-8") as f:
-                        rule_content = f.read()
-                        all_rules.append(rule_content)
-                    print(f"   ✅ Loaded rule: {rule_file}")
-                except Exception as e:
-                    print(f"⚠️ Warning: Could not load rule file {rule_file}: {e}")
+    #         # Load and combine all rule files
+    #         all_rules = []
+    #         for rule_file in rule_files:
+    #             rule_path = os.path.join(rules_dir, rule_file)
+    #             try:
+    #                 with open(rule_path, "r", encoding="utf-8") as f:
+    #                     rule_content = f.read()
+    #                     all_rules.append(rule_content)
+    #                 print(f"   ✅ Loaded rule: {rule_file}")
+    #             except Exception as e:
+    #                 print(f"⚠️ Warning: Could not load rule file {rule_file}: {e}")
 
-            if not all_rules:
-                print(f"⚠️ Warning: No rules could be loaded")
-                return self._get_fallback_rules()
+    #         if not all_rules:
+    #             print(f"⚠️ Warning: No rules could be loaded")
+    #             return self._get_fallback_rules()
 
-            # Combine all rules with separators
-            combined_rules = "\n\n---\n\n".join(all_rules)
-            print(f"   ✅ Successfully loaded {len(all_rules)} rule file(s)")
-            return combined_rules
+    #         # Combine all rules with separators
+    #         combined_rules = "\n\n---\n\n".join(all_rules)
+    #         print(f"   ✅ Successfully loaded {len(all_rules)} rule file(s)")
+    #         return combined_rules
 
-        except Exception as e:
-            print(f"⚠️ Warning: Could not access rules directory {rules_dir}: {e}")
-            return self._get_fallback_rules()
+    #     except Exception as e:
+    #         print(f"⚠️ Warning: Could not access rules directory {rules_dir}: {e}")
+    #         return self._get_fallback_rules()
 
     def _load_system_prompt_template(self) -> str:
         """Load prompt template based on language.

@@ -55,16 +55,16 @@ class Config:
     INITIAL_RETRY_DELAY = 5  # seconds
     RETRY_BACKOFF_MULTIPLIER = 2
 
-    @classmethod
-    def get_rules_path(cls) -> Path:
-        """Lấy đường dẫn tuyệt đối đến thư mục chứa rules (scripts/pubstar-ios)."""
-        # __file__ trỏ tới: scripts/reviewer/config.py
-        # .parent lần 1 ra: scripts/reviewer/
-        # .parent lần 2 ra: scripts/
-        scripts_dir = Path(__file__).resolve().parent.parent
+    # @classmethod
+    # def get_rules_path(cls) -> Path:
+    #     """Lấy đường dẫn tuyệt đối đến thư mục chứa rules (scripts/pubstar-ios)."""
+    #     # __file__ trỏ tới: scripts/reviewer/config.py
+    #     # .parent lần 1 ra: scripts/reviewer/
+    #     # .parent lần 2 ra: scripts/
+    #     scripts_dir = Path(__file__).resolve().parent.parent
         
-        # Trỏ tới thư mục pubstar-ios nằm trong folter scripts/rules/
-        return scripts_dir / "rules" / cls.RULES_DIR
+    #     # Trỏ tới thư mục pubstar-ios nằm trong folter scripts/rules/
+    #     return scripts_dir / "rules" / cls.RULES_DIR
     
     @classmethod
     def get_stacks_path(cls) -> Path:
@@ -101,16 +101,16 @@ class Config:
         if cls.REVIEW_LANGUAGE not in ['vietnamese', 'english']:
             errors.append(f"Invalid REVIEW_LANGUAGE: {cls.REVIEW_LANGUAGE}. Must be 'vietnamese' or 'english'")
 
-        rules_path = cls.get_rules_path()
-        if not rules_path.exists() or not rules_path.is_dir():
-            errors.append(f"Rules directory not found at: {cls.RULES_DIR}")
+        stacks_path = cls.get_stacks_path()
+        if not stacks_path.exists() or not stacks_path.is_dir():
+            errors.append(f"Stack directory not found at: {cls.STACK}")
         else:
             # Tìm tất cả file kết thúc bằng .md ở ngay trong thư mục này
-            md_files = list(rules_path.glob("*.md"))
+            md_files = list(stacks_path.glob("*.md"))
 
-            print(f"Debug: Checking md files: {len(md_files)} found in {rules_path}")
+            print(f"Debug: Checking md files: {len(md_files)} found in {stacks_path}")
             if not md_files:
-                errors.append(f"Rules directory '{cls.RULES_DIR}' contains no markdown (.md) files.")
+                errors.append(f"Stacks directory '{cls.STACK}' contains no markdown (.md) files.")
 
         return errors
 
