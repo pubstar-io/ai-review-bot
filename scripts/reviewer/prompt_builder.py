@@ -83,7 +83,8 @@ class PromptBuilder:
         print(f"   📦 Large PR detected: splitting into {len(chunks)} chunks")
 
         # Load common parts once
-        coding_rules = self._load_coding_rules()
+        # coding_rules = self._load_coding_rules()
+        coding_rules = self._load_coding_stack()
         prompt_template = self._load_system_prompt_template()
 
         # Build prompts for each chunk
