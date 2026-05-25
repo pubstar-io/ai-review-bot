@@ -159,11 +159,11 @@ class PromptBuilder:
         """
         if self.language == "english":
             prompt_file = os.path.join(
-                self.script_dir, "prompts", "review_prompt_en.txt"
+                self.script_dir, "system-prompts", "review_prompt_en.txt"
             )
         else:  # Vietnamese (default)
             prompt_file = os.path.join(
-                self.script_dir, "prompts", "review_prompt_vi.txt"
+                self.script_dir, "system-prompts", "review_prompt_vi.txt"
             )
 
         try:
