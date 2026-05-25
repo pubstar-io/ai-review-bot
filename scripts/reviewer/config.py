@@ -75,7 +75,7 @@ class Config:
         scripts_dir = Path(__file__).resolve().parent.parent
         
         # Trỏ tới thư mục pubstar-ios nằm trong folter scripts/stacks/
-        return scripts_dir / "stacks" / cls.STACK_DIR
+        return scripts_dir / "stacks" / cls.STACK
 
     @classmethod
     def validate(cls) -> list[str]:
