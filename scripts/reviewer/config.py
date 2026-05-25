@@ -17,7 +17,8 @@ class Config:
     GITHUB_REF = os.getenv("GITHUB_REF", "")
     REVIEW_LANGUAGE = os.getenv("REVIEW_LANGUAGE", "vietnamese").lower()
     # RULES_DIR = os.getenv("INPUT_RULES_PATH", "ai-review-rules")
-    RULES_DIR = os.getenv("RULES_PATH")
+    # RULES_DIR = os.getenv("RULES_PATH")
+    STACK = os.getenv("STACK")
 
     # OpenRouter model configuration
     # Model is controlled by project maintainers, users cannot override
@@ -64,6 +65,17 @@ class Config:
         
         # Trỏ tới thư mục pubstar-ios nằm trong folter scripts/rules/
         return scripts_dir / "rules" / cls.RULES_DIR
+    
+    @classmethod
+    def get_stacks_path(cls) -> Path:
+        """Lấy đường dẫn tuyệt đối đến thư mục chứa stacks (scripts/stacks/)."""
+        # __file__ trỏ tới: scripts/reviewer/config.py
+        # .parent lần 1 ra: scripts/reviewer/
+        # .parent lần 2 ra: scripts/
+        scripts_dir = Path(__file__).resolve().parent.parent
+        
+        # Trỏ tới thư mục pubstar-ios nằm trong folter scripts/stacks/
+        return scripts_dir / "stacks" / cls.STACK_DIR
 
     @classmethod
     def validate(cls) -> list[str]:

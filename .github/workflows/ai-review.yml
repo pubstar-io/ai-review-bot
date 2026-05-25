@@ -31,6 +31,7 @@ jobs:
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}  # OpenRouter API key (gán giá trị trong secrets của repository)
           github-token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token (giá trị này sẽ được tự động cung cấp bởi GitHub Actions)
+          stack: 'mobile-ios'
           review-language: 'vietnamese' # Ngôn ngữ cho comment review: 'vietnamese' hoặc 'english' (mặc định: vietnamese)
           rules-path: 'pubstar-ios'  # Đường dẫn đến thư mục chứa các file .md rules review
           openrouter-model: 'google/gemini-3.1-flash-lite'  # OpenRouter model được sử dụng (default: google/gemini-3.1-flash-lite)

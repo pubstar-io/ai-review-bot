@@ -42,10 +42,12 @@ class PromptBuilder:
         )
 
         # Load coding rules
-        coding_rules = self._load_coding_rules()
+        # coding_rules = self._load_coding_rules()
+        coding_stack = self._load_coding_stack()
+        print(f"Debug: Content of coding_stack: {coding_stack}")
 
         # Load prompt template
-        prompt_template = self._load_prompt_template()
+        system_prompt_template = self._load_system_prompt_template()
 
         # Add truncation warning if needed
         truncation_warning = ""
@@ -53,8 +55,8 @@ class PromptBuilder:
             truncation_warning = self._get_truncation_warning()
 
         # Build final prompt
-        prompt = prompt_template.format(
-            coding_rules=coding_rules,
+        prompt = system_prompt_template.format(
+            coding_rules=coding_stack,
             code_diff=short_diff + truncation_warning
         )
 
@@ -82,7 +84,7 @@ class PromptBuilder:
 
         # Load common parts once
         coding_rules = self._load_coding_rules()
-        prompt_template = self._load_prompt_template()
+        prompt_template = self._load_system_prompt_template()
 
         # Build prompts for each chunk
         prompts = []
@@ -106,6 +108,51 @@ class PromptBuilder:
             prompts.append((prompt, chunk))
 
         return prompts
+    
+    def _load_coding_stack(self) -> str:
+        """Load coding stack from files in the stacks/ directory.
+
+        Returns:
+            Combined coding stack text from files
+        """
+        stacks_dir = Config.get_stacks_path()
+
+        try:
+            # Get all markdown files in the rule directory
+            md_files = sorted([
+                f for f in os.listdir(stacks_dir)
+                if f.endswith('.md')
+            ])
+
+            if not md_files:
+                print(f"⚠️ Warning: No rule files found in {stacks_dir}")
+                return self._get_fallback_rules()
+
+            # Load and combine all rule files
+            all_stacks = []
+            for stack_file in md_files:
+                stack_path = os.path.join(stacks_dir, stack_file)
+                try:
+                    with open(stack_path, "r", encoding="utf-8") as f:
+                        md_content = f.read()
+                        all_stacks.append(md_content)
+                    print(f"   ✅ Loaded rule: {stack_file}")
+                except Exception as e:
+                    print(f"⚠️ Warning: Could not load rule file {stack_file}: {e}")
+
+            if not all_stacks:
+                print(f"⚠️ Warning: No rules could be loaded")
+                return self._get_fallback_stacks()
+
+            # Combine all rules with separators
+            combined_stacks = "\n\n===========================\n\n".join(all_stacks)
+            print(f"   ✅ Successfully loaded {len(all_stacks)} rule file(s)")
+            return combined_stacks
+
+        except Exception as e:
+            print(f"⚠️ Warning: Could not access rules directory {stacks_dir}: {e}")
+            return self._get_fallback_stacks()
+        
 
     def _load_coding_rules(self) -> str:
         """Load coding rules from all rule files in the rule/ directory.
@@ -151,7 +198,7 @@ class PromptBuilder:
             print(f"⚠️ Warning: Could not access rules directory {rules_dir}: {e}")
             return self._get_fallback_rules()
 
-    def _load_prompt_template(self) -> str:
+    def _load_system_prompt_template(self) -> str:
         """Load prompt template based on language.
 
         Returns:
@@ -189,6 +236,15 @@ class PromptBuilder:
         - i18n: Use context.tr() (NOT hardcoded strings)
         - Error Handling: Return Either<Failure, T> in repositories
         """)
+    
+
+    def _get_fallback_stacks(self) -> str:
+        """Get fallback coding stacks if file cannot be loaded.
+
+        Returns:
+            Minimal coding stacks
+        """
+        return textwrap.dedent("")
 
     def _get_fallback_template(self) -> str:
         """Get fallback prompt template if file cannot be loaded.
